@@ -10,7 +10,7 @@ export default function Home() {
         <Link href={'/list/unpaid'} className="p-4 bg-orange-700 dark:bg-orange-900 rounded text-gray-200 hover:translate-y-2 transition-transform">Students to pay</Link>
         <Link href={'/list/new'} className="p-4 bg-orange-700 dark:bg-orange-900 rounded text-gray-200 hover:translate-y-2 transition-transform">Register Students</Link>
         <Link href={'/list'} className="p-4 bg-orange-700 dark:bg-orange-900 rounded text-gray-200 hover:translate-y-2 transition-transform">All Students</Link>
-        <Link href={'/transactions'} className="p-4 bg-orange-700 dark:bg-orange-900 rounded text-gray-200 hover:translate-y-2 transition-transform">Payments collected</Link>
+        <Link href={'/payments'} className="p-4 bg-orange-700 dark:bg-orange-900 rounded text-gray-200 hover:translate-y-2 transition-transform">Payments collected</Link>
       </div>
       {
       }
