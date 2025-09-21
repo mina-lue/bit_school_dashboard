@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React from "react";
 
 const AboutPage = () => {
@@ -22,6 +23,9 @@ const AboutPage = () => {
         <div className="flex gap-2 items-center justify-center mt-2">
           <p className="p-1 sm:p-2 bg-gray-800 w-fit rounded text-gray-200 text-sm">Contact the developer</p>
           <p className="p-1 sm:p-2 bg-gray-800 w-fit rounded text-gray-200 text-sm">About BIT</p>
+        </div>
+        <div className="w-full flex justify-center mt-4">
+            <Image src={'/bit.png'} width={100} height={100} alt="bit" className="w-20 object-cover rounded"/>
         </div>
       </div>
     </div>
