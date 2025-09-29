@@ -5,7 +5,7 @@ import React from "react";
 const AboutPage = () => {
   return (
     <div className="flex items-center justify-center dark:bg-[#0a0a0a] dark:text-gray-200 text-xl">
-      <div className="flex-col mt-2 mx-4 sm:mx-12 justify-center">
+      <div className="flex-col mt-2 mx-1 sm:mx-4 justify-center">
         <div className="bg-red-800 px-2 rounded text-center float-right"> <Link href={'/'} className="text-white">X</Link> </div>
         <h1 className="sm:text-2xl text-md text-center m-2">
           {"About Bit school pay"}
