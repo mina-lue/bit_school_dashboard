@@ -1,3 +1,12 @@
 export interface Student {
-    firstName: string
+    id: string,
+    firstName: string,
+    middleName: string,
+    lastName: string,
+    phone: string,
+    email: string,
+    class: string,
+    grade: number,
+    schoolId: string,
+    subscribed: boolean,
 }

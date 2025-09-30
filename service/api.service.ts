@@ -40,7 +40,8 @@ const request = async <T> (
             throw new Error(errorData.message || "Could not fetch data!")
         }
 
-        const data = response.status !== 204? null : await response.json();
+        const data = response.status === 204? null : await response.json();
+        console.log('api service ', data)
         return{data, error: null, success: true}
     } catch (err) {
         console.error(`API Error on ${method} ${url}:`, err);
@@ -51,6 +52,6 @@ const request = async <T> (
 }
 
 export const fetchAllStudents = () : Promise<ApiResponse<Student[]>> => {
-    return request("GET", `/api/tenders/my-tenders/`);
-  }
+    return request("GET", `students`);
+}
 
