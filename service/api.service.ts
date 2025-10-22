@@ -1,7 +1,7 @@
+import { LoginResponse } from "@/lib/domains/loginResponse.dto";
 import { Student } from "@/lib/domains/student.model";
 
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_SERVICE_URL;
 
 export type ApiResponse<T> = {
   data: T | null;
@@ -12,15 +12,19 @@ export type ApiResponse<T> = {
 const request = async <T> (
     method: "GET" | "POST" | "PUT" | "DELETE",
     endpoint: string,
-    token?: string,
     body?: string
 ): Promise<ApiResponse<T>> => {
+
+  const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
+const data = await fetch('/api/auth/get-token');
+const token = await data.json()
+
+    console.log('Access token' ,token)
     const url = `${API_BASE_URL}/${endpoint}`;
     const headers : HeadersInit = {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token?.value}`
     }
-    if(token)
-        headers['Authorization'] = `Bearer ${token}`
 
     const config: RequestInit = {
         method,
@@ -53,5 +57,21 @@ const request = async <T> (
 
 export const fetchAllStudents = () : Promise<ApiResponse<Student[]>> => {
     return request("GET", `students`);
+}
+
+
+export async function login(email: string, password: string): Promise<LoginResponse> {
+    console.log('calling backend at ', process.env.NEXT_PUBLIC_API_URL)
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, password }),
+  });
+
+  if (!res.ok) {
+    throw new Error("Invalid credentials");
+  }
+
+  return res.json();
 }
 

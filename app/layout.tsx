@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import FooterComponent from "@/components/footer";
 import TopBarComponent from "@/components/topBar";
+import { AuthProvider } from "@/context/AuthContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,9 +30,11 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <TopBarComponent />
-        <div className="mt-12 h-full w-full">{children}</div>
-        <FooterComponent />
+        <AuthProvider>
+          <TopBarComponent />
+          <div className="mt-12 h-full w-full">{children}</div>
+          <FooterComponent />
+        </AuthProvider>
       </body>
     </html>
   );
