@@ -1,3 +1,4 @@
+import BackButton from "@/components/backButton";
 import {
   Table,
   TableBody,
@@ -7,19 +8,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import Link from "next/link";
 import React from "react";
 
 const PaymentsPage = () => {
   return (
     <div className="flex-col mt-16 mx-1 sm:mx-4 justify-center">
       <div className="flex-col mt-2 mx-1 sm:mx-4 justify-center">
-        <div className="bg-red-800 px-2 rounded text-center float-right">
-          {" "}
-          <Link href={"/"} className="text-white">
-            X
-          </Link>
-        </div>
+        <BackButton />
         <h1 className="sm:text-2xl text-md text-center m-2">
           {"All Payments Collected"}
         </h1>

@@ -1,7 +1,7 @@
 import { LoginResponse } from "@/lib/domains/loginResponse.dto";
-import { Student } from "@/lib/domains/student.model";
-
-
+import { School } from "@/lib/domains/school.dto";
+import { CreateStudentDto, Student } from "@/lib/domains/student.model";
+import { StudentsFilter } from "@/lib/domains/students.filter";
 
 export type ApiResponse<T> = {
   data: T | null;
@@ -9,55 +9,72 @@ export type ApiResponse<T> = {
   success: boolean;
 };
 
-const request = async <T> (
-    method: "GET" | "POST" | "PUT" | "DELETE",
-    endpoint: string,
-    body?: string
-): Promise<ApiResponse<T>> => {
-
+// ✅ Add generic type for body
+const request = async <TResponse, TBody = unknown>(
+  method: "GET" | "POST" | "PUT" | "DELETE",
+  endpoint: string,
+  body?: TBody
+): Promise<ApiResponse<TResponse>> => {
   const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
-const data = await fetch('/api/auth/get-token');
-const token = await data.json()
+  const tokenRes = await fetch("/api/auth/get-token");
+  const token = await tokenRes.json();
 
-    console.log('Access token' ,token)
-    const url = `${API_BASE_URL}/${endpoint}`;
-    const headers : HeadersInit = {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token?.value}`
-    }
+  console.log("Access token", token);
+  const url = `${API_BASE_URL}/${endpoint}`;
+  const headers: HeadersInit = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${token?.value}`,
+  };
 
-    const config: RequestInit = {
-        method,
-        headers
-    }
+  const config: RequestInit = { method, headers };
 
-    if(body)
-        config.body = JSON.stringify(body)
-
-    try {
-        console.log(`Making ${method} request to ${url} with body:`, body);
-        const response = await fetch(url, config);
-        console.log(response);
-
-        if(!response.ok){
-            const errorData = await response.json();
-            throw new Error(errorData.message || "Could not fetch data!")
-        }
-
-        const data = response.status === 204? null : await response.json();
-        console.log('api service ', data)
-        return{data, error: null, success: true}
-    } catch (err) {
-        console.error(`API Error on ${method} ${url}:`, err);
-        const errorMessage = err instanceof Error ? err.message : "An unknown error occurred.";
-        return { data: null, error: errorMessage, success: false };
+  // ✅ Automatically stringify body only if it’s a plain object or array
+  if (body !== undefined && body !== null) {
+    config.body =
+      typeof body === "object" ? JSON.stringify(body) : (body as unknown as string);
   }
 
+  try {
+    console.log(`Making ${method} request to ${url} with body:`, body);
+    const response = await fetch(url, config);
+    console.log(response);
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(errorData.message || "Could not fetch data!");
+    }
+
+    const data = response.status === 204 ? null : await response.json();
+    console.log("api service ", data);
+
+    return { data, error: null, success: true };
+  } catch (err) {
+    console.error(`API Error on ${method} ${url}:`, err);
+    const errorMessage =
+      err instanceof Error ? err.message : "An unknown error occurred.";
+    return { data: null, error: errorMessage, success: false };
+  }
+};
+
+export const fetchAllStudents = (
+  filter: StudentsFilter
+): Promise<ApiResponse<Student[]>> => {
+  const url = filter
+    ? `students?top=${filter?.top}&size=${filter?.size}`
+    : "students";
+  return request<Student[]>("GET", url);
+};
+
+export const fetchSchools = ( filter: StudentsFilter) : Promise<ApiResponse<School[]>> => {
+    const url = filter ? `schools?top=${filter?.top}&size=${filter?.size}` : 'schools'
+    return request("GET", url);
 }
 
-export const fetchAllStudents = () : Promise<ApiResponse<Student[]>> => {
-    return request("GET", `students`);
+export const registerStudent = ( student: CreateStudentDto) : Promise<ApiResponse<Student>> => {
+    return request("POST", 'students/new', student);
 }
+
+
 
 
 export async function login(email: string, password: string): Promise<LoginResponse> {

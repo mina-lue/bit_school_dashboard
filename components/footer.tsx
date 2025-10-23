@@ -12,7 +12,7 @@ const FooterComponent = () => {
           width={20}
           className="rounded-full"
         />
-        <p> BIT</p>
+        <p className="text-sm"> BIT</p>
       </div>
     </div>
   );

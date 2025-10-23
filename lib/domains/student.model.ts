@@ -20,5 +20,4 @@ export interface CreateStudentDto {
     class: string,
     grade: number,
     schoolId: string,
-    subscribed: boolean,
 }

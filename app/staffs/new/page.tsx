@@ -10,17 +10,10 @@ import BackButton from "@/components/backButton";
 import { CreateStudentDto, Student } from "@/lib/domains/student.model";
 
 // 🧠 Schema definition with Zod
-const studentSchema = z.object({
+const staffSchema = z.object({
   firstName: z.string().min(1, "First name is required"),
   middleName: z.string().min(1, "Middle name is required"),
   lastName: z.string().min(1, "Last name is required"),
-  grade: z
-    .number({
-      error: "Grade must be a number",
-    })
-    .min(1)
-    .max(12),
-  class: z.string().min(1, "Class is required"),
   phone: z
     .string()
     .regex(/^0\d{9}$/, "Phone must be 10 digits and start with 0"),
@@ -28,7 +21,7 @@ const studentSchema = z.object({
   schoolId: z.string().optional(),
 });
 
-type StudentFormData = z.infer<typeof studentSchema>;
+type StaffFormData = z.infer<typeof staffSchema>;
 
 export default function NewStudentPage() {
   const [schools, setSchools] = useState<School[]>([]);
@@ -38,8 +31,8 @@ export default function NewStudentPage() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<StudentFormData>({
-    resolver: zodResolver(studentSchema),
+  } = useForm<StaffFormData>({
+    resolver: zodResolver(staffSchema),
   });
 
   // 🏫 Fetch school list
@@ -58,7 +51,7 @@ export default function NewStudentPage() {
   }, []);
 
   // 📨 Submit handler
-  const onSubmit = async (data: StudentFormData) => {
+  const onSubmit = async (data: StaffFormData) => {
     console.log("Final data:", data);
     await registerStudent(data as CreateStudentDto);
   };
@@ -67,8 +60,8 @@ export default function NewStudentPage() {
     <div className="flex-col mt-16 mx-1 sm:mx-4 justify-center">
     <div className="flex-col mt-2 mx-1 sm:mx-4 justify-center">
         <BackButton />
-      <div className="w-1/3 mx-auto mt-10 p-6 border rounded-xl shadow-md">
-        <h1 className="text-2xl font-semibold mb-4">Register New Student</h1>
+      <div className="w-1/3 mx-auto mt-10 p-6 border rounded-xl shadow-md ">
+        <h1 className="text-2xl font-semibold mb-4">Register New Staff Member</h1>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
@@ -103,29 +96,6 @@ export default function NewStudentPage() {
             />
             {errors.lastName && (
               <p className="text-red-500 text-sm">{errors.lastName.message}</p>
-            )}
-          </div>
-
-          <div>
-            <label className="block font-medium">Grade</label>
-            <input
-              type="number"
-              {...register("grade", { valueAsNumber: true })}
-              className="border w-full px-3 py-2 rounded"
-            />
-            {errors.grade && (
-              <p className="text-red-500 text-sm">{errors.grade.message}</p>
-            )}
-          </div>
-
-          <div>
-            <label className="block font-medium">Class</label>
-            <input
-              {...register("class")}
-              className="border w-full px-3 py-2 rounded"
-            />
-            {errors.class && (
-              <p className="text-red-500 text-sm">{errors.class.message}</p>
             )}
           </div>
 

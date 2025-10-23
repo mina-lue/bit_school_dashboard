@@ -1,4 +1,5 @@
 "use client";
+import BackButton from "@/components/backButton";
 import {
   Table,
   TableBody,
@@ -24,7 +25,7 @@ const StudentsListPage = () => {
       setError(null);
 
       try {
-        const res = await fetchAllStudents();
+        const res = await fetchAllStudents({top: 1, size: 10});
         const data = res.data;
         console.log('data collected',res);
         setStudents(data);
@@ -52,10 +53,11 @@ const StudentsListPage = () => {
   return (
     <div className="flex-col mt-16 mx-1 sm:mx-4 justify-center">
       <div className="flex-col mt-2 mx-1 sm:mx-4 justify-center">
-        <div className="bg-red-800 px-2 rounded text-center float-right">
+        <BackButton />
+        <div className="bg-green-800 px-2 rounded text-center float-right mr-2">
           {" "}
-          <Link href={"/"} className="text-white">
-            X
+          <Link href={"/students/new"} className="text-white">
+            + New Student
           </Link>
         </div>
         <h1 className="sm:text-2xl text-md text-center m-2">
