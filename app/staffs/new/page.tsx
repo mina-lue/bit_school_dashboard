@@ -4,12 +4,12 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { fetchSchools, registerStudent } from "@/service/api.service";
+import { fetchSchools, registerStaff } from "@/service/api.service";
 import { School } from "@/lib/domains/school.dto";
 import BackButton from "@/components/backButton";
-import { CreateStudentDto, Student } from "@/lib/domains/student.model";
+import { CreateStaffDto } from "@/lib/domains/user.model";
 
-// 🧠 Schema definition with Zod
+
 const staffSchema = z.object({
   firstName: z.string().min(1, "First name is required"),
   middleName: z.string().min(1, "Middle name is required"),
@@ -18,6 +18,7 @@ const staffSchema = z.object({
     .string()
     .regex(/^0\d{9}$/, "Phone must be 10 digits and start with 0"),
   email: z.string().email("Invalid email address"),
+  password: z.string().min(4, "password is required"),
   schoolId: z.string().optional(),
 });
 
@@ -35,7 +36,7 @@ export default function NewStudentPage() {
     resolver: zodResolver(staffSchema),
   });
 
-  // 🏫 Fetch school list
+
   useEffect(() => {
     const loadSchools = async () => {
       try {
@@ -50,10 +51,10 @@ export default function NewStudentPage() {
     loadSchools();
   }, []);
 
-  // 📨 Submit handler
+
   const onSubmit = async (data: StaffFormData) => {
     console.log("Final data:", data);
-    await registerStudent(data as CreateStudentDto);
+    await registerStaff(data as CreateStaffDto);
   };
 
   return (
@@ -118,6 +119,17 @@ export default function NewStudentPage() {
             />
             {errors.email && (
               <p className="text-red-500 text-sm">{errors.email.message}</p>
+            )}
+          </div>
+
+          <div>
+            <label className="block font-medium">Password</label>
+            <input
+              {...register("password")}
+              className="border w-full px-3 py-2 rounded"
+            />
+            {errors.lastName && (
+              <p className="text-red-500 text-sm">{errors.lastName.message}</p>
             )}
           </div>
 

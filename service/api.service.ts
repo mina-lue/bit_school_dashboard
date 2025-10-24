@@ -2,6 +2,7 @@ import { LoginResponse } from "@/lib/domains/loginResponse.dto";
 import { School } from "@/lib/domains/school.dto";
 import { CreateStudentDto, Student } from "@/lib/domains/student.model";
 import { StudentsFilter } from "@/lib/domains/students.filter";
+import { CreateStaffDto, CreateUserDto } from "@/lib/domains/user.model";
 
 export type ApiResponse<T> = {
   data: T | null;
@@ -74,7 +75,9 @@ export const registerStudent = ( student: CreateStudentDto) : Promise<ApiRespons
     return request("POST", 'students/new', student);
 }
 
-
+export const registerStaff = ( user: CreateStaffDto) : Promise<ApiResponse<Student>> => {
+    return request("POST", 'auth/signup', user);
+}
 
 
 export async function login(email: string, password: string): Promise<LoginResponse> {

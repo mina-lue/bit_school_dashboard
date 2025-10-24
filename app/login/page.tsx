@@ -22,7 +22,7 @@ export default function LoginPage() {
       const data = await apiLogin(email, password);
       login(data);
       router.push("/");
-    } catch (err) {
+    } catch {
       setError("Invalid email or password");
     } finally {
       setLoading(false);
@@ -38,10 +38,10 @@ export default function LoginPage() {
         <h1 className="text-2xl font-semibold text-center">Sign In</h1>
 
         <div>
-          <label className="block text-sm text-gray-600 mb-1">Email</label>
+          <label className="block text-sm mb-1">Email</label>
           <input
             type="email"
-            className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full border border-gray-400 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
@@ -49,10 +49,10 @@ export default function LoginPage() {
         </div>
 
         <div>
-          <label className="block text-sm text-gray-600 mb-1">Password</label>
+          <label className="block text-sm mb-1">Password</label>
           <input
             type="password"
-            className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full border border-gray-400 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
