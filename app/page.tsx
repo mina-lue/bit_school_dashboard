@@ -7,7 +7,7 @@ export default function Home() {
         <div>
           <p>Pay From Your Comfort for your student!</p>
         <div className="flex flex-wrap gap-2">
-            <Link href={'/students/paidFor'} className="p-4 bg-gray-700 dark:bg-gray-900 rounded text-gray-200 dark:text-gray-300 ">Some Actions</Link>
+            <Link href={'/registration'} className="p-4 bg-gray-700 dark:bg-gray-900 rounded text-gray-200 dark:text-gray-300 ">Some Actions</Link>
         </div>
         </div>
       </div>
