@@ -71,6 +71,15 @@ export const fetchAllStudents = (
   return request<Student[]>("GET", url);
 };
 
+export const fetchStudentsSubscribed = (
+  filter: StudentsFilter
+): Promise<ApiResponse<Student[]>> => {
+  const url = filter
+    ? `students/my-school?page=${filter?.page}&size=${filter?.size}&subscribed=true`
+    : "students/my-school?subscribed=true";
+  return request<Student[]>("GET", url);
+};
+
 
 export const registerStudent = ( student: CreateStudentDto) : Promise<ApiResponse<Student>> => {
     return request("POST", 'students/new', student);

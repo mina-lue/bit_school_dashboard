@@ -10,7 +10,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Student } from "@/lib/domains/student.model";
-import { fetchAllStudents } from "@/service/api.service";
+import { fetchStudentsSubscribed } from "@/service/api.service";
 import React, { useEffect, useState } from "react";
 
 const StudentsPaidListPage = () => {
@@ -24,10 +24,11 @@ const StudentsPaidListPage = () => {
       setError(null);
 
       try {
-        const res = await fetchAllStudents(
+        const res = await fetchStudentsSubscribed(
           {
-            top: 1,
-            size: 10
+            page: 1,
+            size: 10,
+            subscribed: true
           }
         );
         const data = res.data;
