@@ -71,7 +71,7 @@ const RegisterSchoolPage = () => {
             <div>
               <label className="block font-medium">School Name</label>
               <input
-                {...register("firstName")}
+                {...register("schoolName")}
                 className="border w-full px-3 py-2 rounded"
               />
               {errors.firstName && (
@@ -84,7 +84,7 @@ const RegisterSchoolPage = () => {
             <div>
               <label className="block font-medium">School Email</label>
               <input
-                {...register("firstName")}
+                {...register("schoolEmail")}
                 className="border w-full px-3 py-2 rounded"
               />
               {errors.firstName && (
@@ -160,6 +160,7 @@ const RegisterSchoolPage = () => {
             <label className="block font-medium">Password</label>
             <input
               {...register("password")}
+              type="password"
               className="border w-full px-3 py-2 rounded"
             />
             {errors.lastName && (

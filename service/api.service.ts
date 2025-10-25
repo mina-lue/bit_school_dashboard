@@ -80,7 +80,7 @@ export const registerStaff = ( user: CreateStaffDto) : Promise<ApiResponse<Stude
 }
 
 export const registerSchool = ( schoolData: CreateSchoolWithPrincipal) : Promise<ApiResponse<School>> => {
-    return request("POST", 'auth/signup', schoolData);
+    return request("POST", 'register-school', schoolData);
 }
 
 
