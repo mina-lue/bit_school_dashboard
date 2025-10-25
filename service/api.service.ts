@@ -2,7 +2,7 @@ import { LoginResponse } from "@/lib/domains/loginResponse.dto";
 import { CreateSchoolWithPrincipal, School } from "@/lib/domains/school.dto";
 import { CreateStudentDto, Student } from "@/lib/domains/student.model";
 import { StudentsFilter } from "@/lib/domains/students.filter";
-import { CreateStaffDto, CreateUserDto } from "@/lib/domains/user.model";
+import { CreateStaffDto, CreateUserDto, User } from "@/lib/domains/user.model";
 
 export type ApiResponse<T> = {
   data: T | null;
@@ -57,23 +57,33 @@ const request = async <TResponse, TBody = unknown>(
   }
 };
 
+export const fetchSchools = ( filter: StudentsFilter) : Promise<ApiResponse<School[]>> => {
+    const url = filter ? `schools?page=${filter?.page}&size=${filter?.size}` : 'schools'
+    return request("GET", url);
+}
+
 export const fetchAllStudents = (
   filter: StudentsFilter
 ): Promise<ApiResponse<Student[]>> => {
   const url = filter
-    ? `students?top=${filter?.top}&size=${filter?.size}`
-    : "students";
+    ? `students/my-school?page=${filter?.page}&size=${filter?.size}`
+    : "students/my-school";
   return request<Student[]>("GET", url);
 };
 
-export const fetchSchools = ( filter: StudentsFilter) : Promise<ApiResponse<School[]>> => {
-    const url = filter ? `schools?top=${filter?.top}&size=${filter?.size}` : 'schools'
-    return request("GET", url);
-}
 
 export const registerStudent = ( student: CreateStudentDto) : Promise<ApiResponse<Student>> => {
     return request("POST", 'students/new', student);
 }
+
+export const fetchMyStaffs = (
+  filter: StudentsFilter
+): Promise<ApiResponse<User[]>> => {
+  const url = filter
+    ? `users/my-staffs?page=${filter?.page}&size=${filter?.size}`
+    : "users/my-staffs";
+  return request<User[]>("GET", url);
+};
 
 export const registerStaff = ( user: CreateStaffDto) : Promise<ApiResponse<Student>> => {
     return request("POST", 'auth/signup', user);

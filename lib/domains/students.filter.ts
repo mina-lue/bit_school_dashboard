@@ -1,5 +1,5 @@
 export interface StudentsFilter {
-  top: number;
+  page: number;
   size: number;
   schoolId?: string;
   grade?: string;

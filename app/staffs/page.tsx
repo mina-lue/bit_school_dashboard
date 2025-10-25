@@ -1,47 +1,55 @@
-'use client'
-import BackButton from '@/components/backButton'
-import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell, TableFooter } from '@/components/ui/table'
-import { Student } from '@/lib/domains/student.model'
-import { fetchAllStudents } from '@/service/api.service'
-import Link from 'next/link'
-import React, { useEffect, useState } from 'react'
+"use client";
+import BackButton from "@/components/backButton";
+import {
+  Table,
+  TableHeader,
+  TableRow,
+  TableHead,
+  TableBody,
+  TableCell,
+  TableFooter,
+} from "@/components/ui/table";
+import { User } from "@/lib/domains/user.model";
+import { fetchMyStaffs } from "@/service/api.service";
+import Link from "next/link";
+import React, { useEffect, useState } from "react";
 
 const StaffsPage = () => {
-    const [students, setStudents] = useState<Student[] | null>([]);
-      const [error, setError] = useState<string | null>();
-      const [loading, setLoading] = useState<boolean>(false);
-    
-      useEffect(() => {
-        const fetchStudents = async () => {
-          setLoading(false);
-          setError(null);
-    
-          try {
-            const res = await fetchAllStudents({top: 1, size: 10});
-            const data = res.data;
-            console.log('data collected',res);
-            setStudents(data);
-          } catch (e) {
-            console.error(e);
-            setError("Error loading tenders. Please try again later.");
-          } finally {
-            setLoading(false);
-          }
-        };
-    
-        fetchStudents();
-      }, []);
-    
-      if (error)
-        return (
-          <div className="flex text-center items-center text-red-500">
-            Error Loading Students
-          </div>
-        );
-      if (loading)
-        return (
-          <div className="flex text-center items-center">Loading Students</div>
-        );
+  const [staffs, setStaffs] = useState<User[] | null>([]);
+  const [error, setError] = useState<string | null>();
+  const [loading, setLoading] = useState<boolean>(false);
+
+  useEffect(() => {
+    const fetchStudents = async () => {
+      setLoading(false);
+      setError(null);
+
+      try {
+        const res = await fetchMyStaffs({ page: 1, size: 10 });
+        const data = res.data;
+        console.log("data collected", res);
+        setStaffs(data);
+      } catch (e) {
+        console.error(e);
+        setError("Error loading tenders. Please try again later.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchStudents();
+  }, []);
+
+  if (error)
+    return (
+      <div className="flex text-center items-center text-red-500">
+        Error Loading Students
+      </div>
+    );
+  if (loading)
+    return (
+      <div className="flex text-center items-center">Loading Students</div>
+    );
 
   return (
     <div className="flex-col mt-16 mx-1 sm:mx-4 justify-center">
@@ -74,22 +82,21 @@ const StaffsPage = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {students &&
-              students.map((student: Student) => (
-                <TableRow key={student.id}>
-                  <TableCell>{`${student.firstName} ${student.middleName} ${student.lastName}`}</TableCell>
-                  <TableCell className="text-right">{student.id}</TableCell>
-                  <TableCell className="text-right">{student.phone}</TableCell>
-                  <TableCell className="text-right">{student.email}</TableCell>
+            {staffs &&
+              staffs.map((staff: User) => (
+                <TableRow key={staff.id}>
+                  <TableCell>{`${staff.firstName} ${staff.middleName} ${staff.lastName}`}</TableCell>
+                  <TableCell className="text-right">{staff.id}</TableCell>
+                  <TableCell className="text-right">{staff.phone}</TableCell>
+                  <TableCell className="text-right">{staff.email}</TableCell>
                 </TableRow>
               ))}
           </TableBody>
           <TableFooter className="dark:bg-orange-900 bg-orange-800 h-12" />
         </Table>
+      </div>
     </div>
-    </div>
-  )
-}
+  );
+};
 
-export default StaffsPage
-
+export default StaffsPage;

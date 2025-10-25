@@ -25,7 +25,7 @@ const StudentsListPage = () => {
       setError(null);
 
       try {
-        const res = await fetchAllStudents({top: 1, size: 10});
+        const res = await fetchAllStudents({page: 1, size: 10});
         const data = res.data;
         console.log('data collected',res);
         setStudents(data);
