@@ -26,4 +26,5 @@ export interface CreateStaffDto {
   phone: string
   password: string
   schoolId: string
+  role: 'STAFF'
 }

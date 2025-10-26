@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 interface DecodedToken {
   sub: string;
   username: string;
-  role: "ADMIN" | "SUPER_ADMIN" | "STAFF";
+  role: "ADMIN" | "SUPER_ADMIN" | "STAFF" | "BASIC";
   exp: number;
   iat: number;
 }

@@ -2,7 +2,7 @@ import { LoginResponse } from "@/lib/domains/loginResponse.dto";
 import { CreateSchoolWithPrincipal, School } from "@/lib/domains/school.dto";
 import { CreateStudentDto, Student } from "@/lib/domains/student.model";
 import { StudentsFilter } from "@/lib/domains/students.filter";
-import { CreateStaffDto, CreateUserDto, User } from "@/lib/domains/user.model";
+import { CreateStaffDto, User } from "@/lib/domains/user.model";
 
 export type ApiResponse<T> = {
   data: T | null;
@@ -80,6 +80,15 @@ export const fetchStudentsSubscribed = (
   return request<Student[]>("GET", url);
 };
 
+export const fetchStudentsYetToSubscribe = (
+  filter: StudentsFilter
+): Promise<ApiResponse<Student[]>> => {
+  const url = filter
+    ? `students/my-school?page=${filter?.page}&size=${filter?.size}&subscribed=false`
+    : "students/my-school?subscribed=false";
+  return request<Student[]>("GET", url);
+};
+
 
 export const registerStudent = ( student: CreateStudentDto) : Promise<ApiResponse<Student>> => {
     return request("POST", 'students/new', student);
@@ -95,6 +104,7 @@ export const fetchMyStaffs = (
 };
 
 export const registerStaff = ( user: CreateStaffDto) : Promise<ApiResponse<Student>> => {
+    user.role = 'STAFF';
     return request("POST", 'auth/signup', user);
 }
 
@@ -104,7 +114,6 @@ export const registerSchool = ( schoolData: CreateSchoolWithPrincipal) : Promise
 
 
 export async function login(email: string, password: string): Promise<LoginResponse> {
-    console.log('calling backend at ', process.env.NEXT_PUBLIC_API_URL)
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },

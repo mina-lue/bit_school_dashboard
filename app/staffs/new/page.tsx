@@ -8,6 +8,8 @@ import { fetchSchools, registerStaff } from "@/service/api.service";
 import { School } from "@/lib/domains/school.dto";
 import BackButton from "@/components/backButton";
 import { CreateStaffDto } from "@/lib/domains/user.model";
+import { useAuth } from "@/context/AuthContext";
+import { useRouter } from "next/navigation";
 
 
 const staffSchema = z.object({
@@ -25,8 +27,9 @@ const staffSchema = z.object({
 type StaffFormData = z.infer<typeof staffSchema>;
 
 export default function NewStudentPage() {
-  const [schools, setSchools] = useState<School[]>([]);
   const [loading, setLoading] = useState(true);
+  const { user } = useAuth();
+  const router = useRouter();
 
   const {
     register,
@@ -37,24 +40,11 @@ export default function NewStudentPage() {
   });
 
 
-  useEffect(() => {
-    const loadSchools = async () => {
-      try {
-        const res = await fetchSchools({ top: 1, size: 1000 });
-        setSchools(res.data ?? []);
-      } catch (err) {
-        console.error("Failed to load schools", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-    loadSchools();
-  }, []);
-
-
   const onSubmit = async (data: StaffFormData) => {
+    data.schoolId = user?.schoolAsPrincipal.id;
     console.log("Final data:", data);
     await registerStaff(data as CreateStaffDto);
+    router.push('/staffs')
   };
 
   return (
@@ -127,26 +117,11 @@ export default function NewStudentPage() {
             <input
               {...register("password")}
               className="border w-full px-3 py-2 rounded"
+              type="password"
             />
             {errors.lastName && (
               <p className="text-red-500 text-sm">{errors.lastName.message}</p>
             )}
-          </div>
-
-          <div>
-            <label className="block font-medium">School (Optional)</label>
-            <select
-              {...register("schoolId")}
-              disabled={loading}
-              className="border w-full px-3 py-2 rounded"
-            >
-              <option value="">Select school</option>
-              {schools.map((s) => (
-                <option key={s.id} value={s.id}>
-                  {s.name}
-                </option>
-              ))}
-            </select>
           </div>
 
           <button

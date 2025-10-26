@@ -6,7 +6,19 @@ export interface LoginResponse {
     lastName: string;
     email: string;
     phone: string;
-    schoolId: string;
+    role: "ADMIN" | "SUPER_ADMIN" | "STAFF" | "BASIC";
+    schoolAsPrincipal: {
+      id: string;
+      name: string;
+      email: string;
+      principalId: string;
+    };
+    schoolAsStaff: {
+      id: string;
+      name: string;
+      email: string;
+      principalId: string;
+    };
   };
   backendTokens: {
     accessToken: string;
