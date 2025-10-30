@@ -11,6 +11,12 @@ export default function Home() {
           <p>Pay From Your Comfort for your student!</p>
         <div className="flex flex-wrap gap-2">
             <Link href={'/registration'} className="p-4 bg-gray-700 dark:bg-gray-900 rounded text-gray-200 dark:text-gray-300 ">Some Actions</Link>
+            <p>My students</p>
+            <p>School Name</p>
+            <p>up coming payment</p>
+            <p>revenue collected this month</p>
+            <p>update payment data</p>
+            <p>update students data</p>
         </div>
         </div>
       </div>

@@ -17,8 +17,9 @@ const RegisterSchoolPage = () => {
       .regex(/^0\d{9}$/, "Phone must be 10 digits and start with 0"),
     email: z.string().email("Invalid email address"),
     password: z.string().min(4, "password is required"),
-    schoolName: z.string().min(4, "password is required"),
+    schoolName: z.string().min(4, "school name is required"),
     schoolEmail: z.string().email("Invalid email address"),
+    schoolMerchantCode: z.string().min(8, "Enter Correct Merchant Code."),
   });
 
   type SchoolFormData = z.infer<typeof SchoolSchema>;
@@ -57,15 +58,15 @@ const RegisterSchoolPage = () => {
       <div className="flex-col mt-2 mx-1 sm:mx-4 justify-center ">
         <BackButton />
       </div>
-      <div className="w-full">
-        <h1 className="text-2xl font-semibold text-center">Register School</h1>
+      <div className="w-full ">
+        <h1 className="text-2xl font-semibold text-center mb-2">Register School</h1>
 
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="w-[90%] h-[75vh] ml-4 mt-4 border-1 rounded-lg p-4"
+          className="w-[90%] sm:h-[75vh] ml-4 mt-4 sm:border-1 rounded-lg sm:p-4"
         >
-            <div className="flex  justify-between">
-          <div className="w-[48%] border-1 rounded-lg h-full p-4 space-y-4">
+            <div className="sm:flex justify-between">
+          <div className="sm:w-[48%] rounded-lg h-full sm:p-4 sm:space-y-4 space-y-1">
             <h3 className="text-center text-xl">School Information</h3>
 
             <div>
@@ -74,9 +75,9 @@ const RegisterSchoolPage = () => {
                 {...register("schoolName")}
                 className="border w-full px-3 py-2 rounded"
               />
-              {errors.firstName && (
+              {errors.schoolName && (
                 <p className="text-red-500 text-sm">
-                  {errors.firstName.message}
+                  {errors.schoolName.message}
                 </p>
               )}
             </div>
@@ -87,16 +88,29 @@ const RegisterSchoolPage = () => {
                 {...register("schoolEmail")}
                 className="border w-full px-3 py-2 rounded"
               />
-              {errors.firstName && (
+              {errors.schoolEmail && (
                 <p className="text-red-500 text-sm">
-                  {errors.firstName.message}
+                  {errors.schoolEmail.message}
+                </p>
+              )}
+            </div>
+
+            <div>
+              <label className="block font-medium">School Merchant Code</label>
+              <input
+                {...register("schoolEmail")}
+                className="border w-full px-3 py-2 rounded"
+              />
+              {errors.schoolMerchantCode && (
+                <p className="text-red-500 text-sm">
+                  {errors.schoolMerchantCode.message}
                 </p>
               )}
             </div>
           </div>
-          <div className="w-[48%] border-1 rounded-lg h-full p-4 space-y-4">
+          <div className="sm:w-[48%]  rounded-lg h-full sm:p-4 sm:space-y-4 space-y-1">
 
-            <h3 className="text-center text-xl">School Principal Information</h3>
+            <h3 className="text-center text-xl my-2">School Principal Information</h3>
             <div>
               <label className="block font-medium">First Name</label>
               <input
@@ -163,8 +177,8 @@ const RegisterSchoolPage = () => {
               type="password"
               className="border w-full px-3 py-2 rounded"
             />
-            {errors.lastName && (
-              <p className="text-red-500 text-sm">{errors.lastName.message}</p>
+            {errors.password && (
+              <p className="text-red-500 text-sm">{errors.password.message}</p>
             )}
           </div>
           </div>

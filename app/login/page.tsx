@@ -7,7 +7,7 @@ import { useAuth } from "@/context/AuthContext";
 
 export default function LoginPage() {
   const router = useRouter();
-  const { login } = useAuth();
+  const { login, user } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -21,7 +21,8 @@ export default function LoginPage() {
     try {
       const data = await apiLogin(email, password);
       login(data);
-      router.push("/");
+      const  homeRoute =  user?.role === 'SUPER_ADMIN' ? '/super':'/';
+      router.push(homeRoute)
     } catch {
       setError("Invalid email or password");
     } finally {
