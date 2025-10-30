@@ -1,12 +1,12 @@
+import BackButton from "@/components/backButton";
 import Image from "next/image";
-import Link from "next/link";
 import React from "react";
 
 const AboutPage = () => {
   return (
     <div className="flex items-center justify-center dark:bg-[#0a0a0a] dark:text-gray-200 text-xl">
       <div className="flex-col mt-2 mx-1 sm:mx-4 justify-center">
-        <div className="bg-red-800 px-2 rounded text-center float-right"> <Link href={'/'} className="text-white">X</Link> </div>
+        <BackButton />
         <h1 className="sm:text-2xl text-md text-center m-2">
           {"About Bit school pay"}
         </h1>
@@ -21,11 +21,18 @@ const AboutPage = () => {
           `}
         </p>
         <div className="flex gap-2 items-center justify-center mt-2">
-          <p className="p-1 sm:p-2 bg-gray-800 w-fit rounded text-gray-200 text-sm">Contact the developer</p>
-          <p className="p-1 sm:p-2 bg-gray-800 w-fit rounded text-gray-200 text-sm">About BIT</p>
+          <p className="p-1 sm:p-2 bg-gray-800 w-fit rounded text-gray-200 text-sm">
+            Contact Us
+          </p>
         </div>
         <div className="w-full flex justify-center mt-4">
-            <Image src={'/bit.png'} width={100} height={100} alt="bit" className="w-20 object-cover rounded"/>
+          <Image
+            src={"/bit.jpg"}
+            width={30}
+            height={30}
+            alt="bit"
+            className="w-25 h-25 rounded-full"
+          />
         </div>
       </div>
     </div>

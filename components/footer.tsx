@@ -10,7 +10,7 @@ const FooterComponent = () => {
           alt="logo"
           height={20}
           width={20}
-          className="rounded-full"
+          className="rounded-full h-5 w-5"
         />
         <p className="text-sm"> BIT</p>
       </div>
