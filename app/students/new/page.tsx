@@ -20,7 +20,7 @@ const studentSchema = z.object({
     })
     .min(1)
     .max(12),
-  class: z.string().min(1, "Class is required"),
+  section: z.string().min(1, "Class is required"),
   phone: z
     .string()
     .regex(/^0\d{9}$/, "Phone must be 10 digits and start with 0"),
@@ -137,11 +137,11 @@ export default function NewStudentPage() {
             <div>
               <label className="block font-medium">Section</label>
               <input
-                {...register("class")}
+                {...register("section")}
                 className="border w-full px-3 py-2 rounded"
               />
-              {errors.class && (
-                <p className="text-red-500 text-sm">{errors.class.message}</p>
+              {errors.section && (
+                <p className="text-red-500 text-sm">{errors.section.message}</p>
               )}
             </div>
 
