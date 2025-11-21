@@ -24,7 +24,8 @@ const studentSchema = z.object({
   phone: z
     .string()
     .regex(/^0\d{9}$/, "Phone must be 10 digits and start with 0"),
-  email: z.string().email("Invalid email address")
+  email: z.string().email("Invalid email address"),
+  rollNumber: z.number().min(0, "Roll number is required"),
 });
 
 type StudentFormData = z.infer<typeof studentSchema>;
@@ -42,34 +43,37 @@ export default function NewStudentPage() {
     resolver: zodResolver(studentSchema),
   });
 
-
   // 📨 Submit handler
   const onSubmit = async (data: StudentFormData) => {
     setLoading(true);
     console.log("Final data:", data);
     try {
-      if(!user?.schoolAsPrincipal) throw Error('User not Admin!')
-      const response = await registerStudent({...data, schoolId: user?.schoolAsPrincipal.id } as CreateStudentDto);
-      if(response.success){
+      if (!user?.schoolAsPrincipal) throw Error("User not Admin!");
+      const response = await registerStudent({
+        ...data,
+        schoolId: user?.schoolAsPrincipal.id,
+      } as CreateStudentDto);
+      if (response.success) {
         router.back();
-      }}
-      catch (err) {
-        console.log('error', err)
-      } finally {
-        setLoading(false)
       }
+    } catch (err) {
+      console.log("error", err);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  if (loading) return(
-    <div className="flex-col mt-16 mx-1 sm:mx-4 justify-center">
-      <div className="flex-col mt-2 mx-1 sm:mx-4 justify-center">
-        <BackButton />
-         <div className="flex items-center justify-center">
-          <p>loading ...</p>
-         </div>
+  if (loading)
+    return (
+      <div className="flex-col mt-16 mx-1 sm:mx-4 justify-center">
+        <div className="flex-col mt-2 mx-1 sm:mx-4 justify-center">
+          <BackButton />
+          <div className="flex items-center justify-center">
+            <p>loading ...</p>
+          </div>
+        </div>
       </div>
-    </div>
-  )
+    );
 
   return (
     <div className="flex-col mt-16 mx-1 sm:mx-4 justify-center">
@@ -138,6 +142,20 @@ export default function NewStudentPage() {
               />
               {errors.class && (
                 <p className="text-red-500 text-sm">{errors.class.message}</p>
+              )}
+            </div>
+
+            <div>
+              <label className="block font-medium">Roll Number</label>
+              <input
+                type="number"
+                {...register("rollNumber", { valueAsNumber: true })}
+                className="border w-full px-3 py-2 rounded"
+              />
+              {errors.rollNumber && (
+                <p className="text-red-500 text-sm">
+                  {errors.rollNumber.message}
+                </p>
               )}
             </div>
 

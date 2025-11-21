@@ -9,6 +9,7 @@ export interface Student {
     grade: number,
     schoolId: string,
     subscribed: boolean,
+    rollNumber: number
 }
 
 export interface CreateStudentDto {
@@ -20,4 +21,5 @@ export interface CreateStudentDto {
     class: string,
     grade: number,
     schoolId: string,
+    rollNumber: number,
 }
