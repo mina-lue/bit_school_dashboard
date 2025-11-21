@@ -98,7 +98,7 @@ const RegisterSchoolPage = () => {
             <div>
               <label className="block font-medium">School Merchant Code</label>
               <input
-                {...register("schoolEmail")}
+                {...register("schoolMerchantCode")}
                 className="border w-full px-3 py-2 rounded"
               />
               {errors.schoolMerchantCode && (

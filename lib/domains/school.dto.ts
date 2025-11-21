@@ -25,3 +25,16 @@ export interface CreateSchoolWithPrincipal {
     password: string;
   };
 }
+
+export interface DashboardDataShape {
+  admin : {
+    username: string
+    firstname: string;
+    middleName: string;
+    lastName: string;
+  }
+  school: {
+    name: string;
+  }
+  students: number;
+}

@@ -1,5 +1,5 @@
 import { LoginResponse } from "@/lib/domains/loginResponse.dto";
-import { CreateSchoolWithPrincipal, School } from "@/lib/domains/school.dto";
+import { CreateSchoolWithPrincipal, DashboardDataShape, School } from "@/lib/domains/school.dto";
 import { CreateStudentDto, Student } from "@/lib/domains/student.model";
 import { StudentsFilter } from "@/lib/domains/students.filter";
 import { CreateStaffDto, User } from "@/lib/domains/user.model";
@@ -110,6 +110,10 @@ export const registerStaff = ( user: CreateStaffDto) : Promise<ApiResponse<Stude
 
 export const registerSchool = ( schoolData: CreateSchoolWithPrincipal) : Promise<ApiResponse<School>> => {
     return request("POST", 'register-school', schoolData);
+}
+
+export const getDashboardData = () : Promise<ApiResponse<DashboardDataShape>> => {
+    return request("GET", 'dashboard');
 }
 
 
