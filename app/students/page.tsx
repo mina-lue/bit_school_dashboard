@@ -73,7 +73,7 @@ const StudentsListPage = () => {
                 ID
               </TableHead>
               <TableHead className="text-lg text-right text-gray-200 dark:text-gray-300">
-                class
+                Section
               </TableHead>
               <TableHead className="text-lg text-right text-gray-200 dark:text-gray-300">
                 Grade
@@ -89,7 +89,7 @@ const StudentsListPage = () => {
                 <TableRow key={student.id}>
                   <TableCell>{`${student.firstName} ${student.middleName} ${student.lastName}`}</TableCell>
                   <TableCell className="text-right">{student.id}</TableCell>
-                  <TableCell className="text-right">{student.class}</TableCell>
+                  <TableCell className="text-right">{student.section}</TableCell>
                   <TableCell className="text-right">{student.grade}</TableCell>
                   <TableCell className="text-right">
                     {student.subscribed? 'Paid' : 'Yet To Pay'}

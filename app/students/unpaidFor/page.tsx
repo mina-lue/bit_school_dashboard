@@ -67,7 +67,7 @@ const StudentsYetToPayListPage = () => {
             <TableRow>
               <TableHead className="w-1/3 text-lg text-gray-200 dark:text-gray-300 rounded-tl-md">Name</TableHead>
               <TableHead className="text-lg text-right text-gray-200 dark:text-gray-300 ">ID</TableHead>
-              <TableHead className="text-lg text-right text-gray-200 dark:text-gray-300">class</TableHead>
+              <TableHead className="text-lg text-right text-gray-200 dark:text-gray-300">Section</TableHead>
               <TableHead className="text-lg text-right text-gray-200 dark:text-gray-300">Grade</TableHead>
               <TableHead className="text-lg text-right text-gray-200 dark:text-gray-300">Tuition Fee</TableHead>
               <TableHead className="text-lg text-right text-gray-200 dark:text-gray-300 rounded-tr-md">Transport Fee</TableHead>
@@ -79,7 +79,7 @@ const StudentsYetToPayListPage = () => {
                           <TableRow key={student.id}>
                             <TableCell>{`${student.firstName} ${student.middleName} ${student.lastName}`}</TableCell>
                             <TableCell className="text-right">{student.id}</TableCell>
-                            <TableCell className="text-right">{student.class}</TableCell>
+                            <TableCell className="text-right">{student.section}</TableCell>
                             <TableCell className="text-right">{student.grade}</TableCell>
                             <TableCell className="text-right">
                               {student.subscribed? 'Paid' : 'Yet To Pay'}
