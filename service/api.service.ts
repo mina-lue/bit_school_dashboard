@@ -118,6 +118,7 @@ export const getDashboardData = () : Promise<ApiResponse<DashboardDataShape>> =>
 
 
 export async function login(email: string, password: string): Promise<LoginResponse> {
+  console.log(process.env.NEXT_PUBLIC_API_URL);
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
